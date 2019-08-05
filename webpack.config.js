@@ -8,16 +8,28 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
+          query: {
+            presets: ["@babel/preset-env", "@babel/preset-react"]
+          }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              modules: true
+            }
+          }
+        ]
       }
     ]
   },
-  plugins: [
-    [
-      "@babel/plugin-proposal-class-properties"
-    ]
-  ],
   entry: {
     filename: path.resolve(__dirname, './src/') + '/index.js'
   },
@@ -25,5 +37,9 @@ module.exports = {
     path: path.resolve(__dirname, './umd/'),
     filename: 'index.js',
     libraryTarget: "umd"
-  }
+  },
+  devServer: {
+    inline: false,
+    contentBase: "./src",
+  },
 };
