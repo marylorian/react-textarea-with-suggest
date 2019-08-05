@@ -1,0 +1,27 @@
+.textarea-suggest--results {
+    position: absolute;
+    z-index: 150;
+    min-width: 220px;
+    margin: 0 16px;
+    animation: ascent .2s forwards;
+    border-radius: 9px;
+    background-color: #fff;
+    box-shadow: 0 3px 12px #c1c1c1; }
+.textarea-suggest--info {
+    position: absolute;
+    bottom: 8px;
+    right: 8px; }
+.textarea-suggest--info-item {
+    line-height: 20px;
+    margin: 16px 0; }
+.textarea-suggest-item {
+    display: flex;
+    padding: 4px 8px 0; }
+.textarea-suggest-item:first-child {
+    padding-top: 8px; }
+.textarea-suggest-item:last-child {
+    padding-bottom: 8px; }
+.textarea-suggest-item:hover {
+    background-color: #f2f3f9; }
+.textarea-suggest-item--info {
+    margin-left: 8px; }
