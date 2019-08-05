@@ -13,7 +13,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [],
+  plugins: [
+    [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  ],
   entry: {
     filename: path.resolve(__dirname, './src/') + '/index.js'
   },

@@ -1,6 +1,6 @@
 {
   "name": "react-textarea-with-suggest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/index.js",
   "dependencies": {
     "lodash.once": "^4.1.1",
@@ -19,6 +19,22 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marylorian/react-textarea-with-suggest.git"
+  },
+  "keywords": [
+    "textarea",
+    "suggest",
+    "textarea-suggest",
+    "react",
+    "react-component"
+  ],
+  "author": "Maria Lobareva",
+  "bugs": {
+    "url": "https://github.com/marylorian/react-textarea-with-suggest/issues"
+  },
+  "homepage": "https://github.com/marylorian/react-textarea-with-suggest#readme",
   "browserslist": {
     "production": [
       ">0.2%",
