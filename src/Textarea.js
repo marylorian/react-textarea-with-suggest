@@ -83,8 +83,7 @@ export default class Textarea extends React.Component {
     if (last !== searchMarker && needStartSearch) {
       let textWithResults = value.slice(0, selectionEnd);
       let results = textWithResults
-          .slice(textWithResults.lastIndexOf(searchMarker))
-          .match(searchRegexp);
+          .slice(textWithResults.lastIndexOf(searchMarker)).match(new RegExp(searchRegexp));
       let result = results ? results[0].slice(1) : last;
 
       this.props.onSearch(result);
