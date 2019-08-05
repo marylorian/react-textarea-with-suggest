@@ -10,7 +10,5 @@
 "use strict";
 
 import React from 'react';
-import Textarea from './Textarea.js';
 import "./styles.css";
-
-module.exports.textarea = Textarea;
+export { default as TextareaSuggest } from './Textarea';

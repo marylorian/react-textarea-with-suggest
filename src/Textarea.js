@@ -21,7 +21,7 @@ const _mobileAndTabletCheck = () => {
   return check;
 };
 
-module.exports = class Textarea extends React.Component {
+export default class Textarea extends React.Component {
   static propTypes = {
     className: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
