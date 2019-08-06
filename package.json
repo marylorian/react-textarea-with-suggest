@@ -1,7 +1,6 @@
 {
   "name": "react-textarea-with-suggest",
-  "version": "1.0.5",
-  "private": true,
+  "version": "1.0.8a",
   "main": "src/index.js",
   "dependencies": {
     "lodash.once": "^4.1.1",
@@ -51,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/helpers": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",

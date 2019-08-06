@@ -13,30 +13,17 @@ import PropTypes from 'prop-types';
 import once from "lodash.once";
 import "./styles.css";
 
-export default class Textarea extends React.Component {
-  static propTypes = {
-    className: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onSearch: PropTypes.func.isRequired,
-    onSuggestItemRender: PropTypes.func,
-    searchMarker: PropTypes.string.isRequired,
-    searchRegexp: PropTypes.any,
-    suggestList: PropTypes.array,
-    value: PropTypes.string
-  };
+class TextareaSuggest extends React.Component {
+  constructor(props) {
+    super(props);
 
-  static defaultProps = {
-    searchMarker: "@",
-    searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
-    suggestList: [],
-  };
-
-  state = {
-    needStartSearch: this.props.value && this.props.value.includes(this.props.searchMarker),
-    text: this.props.value || ""
-  };
-  _textarea = null;
-  _element = null;
+    this._textarea = null;
+    this._element = null;
+    this.state = {
+      needStartSearch: this.props.value && this.props.value.includes(this.props.searchMarker),
+      text: this.props.value || ""
+    };
+  }
 
   componentDidMount() {
     if (this.props.searchMarker.length > 1) {
@@ -192,3 +179,22 @@ export default class Textarea extends React.Component {
     );
   }
 };
+
+TextareaSuggest.propTypes = {
+  className: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  onSuggestItemRender: PropTypes.func,
+  searchMarker: PropTypes.string.isRequired,
+  searchRegexp: PropTypes.any,
+  suggestList: PropTypes.array,
+  value: PropTypes.string
+};
+
+TextareaSuggest.defaultProps = {
+  searchMarker: "@",
+  searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
+  suggestList: [],
+};
+
+export default TextareaSuggest;
