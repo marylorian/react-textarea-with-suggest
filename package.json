@@ -3,6 +3,7 @@
   "version": "1.0.10",
   "main": "src/index.js",
   "dependencies": {
+    "@babel/helper-create-class-features-plugin": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "lodash.once": "^4.1.1",
     "prop-types": "^15.7.2",
