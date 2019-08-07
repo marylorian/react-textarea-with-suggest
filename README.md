@@ -11,7 +11,7 @@ or
 yarn add react-textarea-with-suggest
 ```
 
-##Usage
+## Usage
 ```
 import Textarea from "react-textarea-with-suggest";
 import { search } from "../actions"
@@ -32,7 +32,8 @@ export default class MyApp extends React.Component {
 }
 ```
 
-##Params
+## Params
+
 |Name|Default value|Required|Description|
 |----|-------------|--------|-----------|
 |className|string: ""|no|className property for `<textarea>` element|
@@ -43,9 +44,9 @@ export default class MyApp extends React.Component {
 |searchRegexp|string: /@([a-z0\d\-.]+[a-z\d])/gim|no||
 |suggestList|array: []|no|rendering suggest when suggestList isn't empty, items rendering in onSuggestItemRender function|
 |value|string: ""|no|text value for `<textarea>`|
-|any else params for `<textarea>`|||https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes|
+|any else params for `<textarea>`| - | - |https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes|
 
-##Using libraries
+## Using libraries
  - "prop-types"
  - "lodash.once"
 
