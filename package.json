@@ -1,6 +1,6 @@
 {
   "name": "react-textarea-with-suggest",
-  "version": "1.0.8a",
+  "version": "1.0.9",
   "main": "src/index.js",
   "dependencies": {
     "lodash.once": "^4.1.1",
