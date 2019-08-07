@@ -3,6 +3,10 @@
   "version": "1.0.10",
   "main": "src/index.js",
   "dependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "lodash.once": "^4.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -10,10 +14,7 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack --optimize-minimize --mode production",
-    "lib": "babel src/node_modules --out-dir lib --copy-files",
-    "test": "node scripts/test.js --env=jsdom"
+    "build": "babel src -d lib"
   },
   "license": "MIT",
   "eslintConfig": {
@@ -47,13 +48,24 @@
       "last 1 safari version"
     ]
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-class-properties",
+        {
+          "loose": true
+        }
+      ]
+    ]
+  },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/helper-create-class-features-plugin": "^7.5.5",
-    "@babel/helpers": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "@babel/core": "^7.0.0-0",
+    "@babel/cli": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
     "@babel/plugin-proposal-function-sent": "^7.0.0",
     "@babel/plugin-proposal-json-strings": "^7.0.0",
@@ -62,11 +74,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-import-meta": "^7.0.0",
     "@babel/plugin-transform-arrow-functions": "^7.2.0",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/register": "^7.5.5",
     "babel-loader": "^8.0.6",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "css-loader": "^3.1.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.1",
