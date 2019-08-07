@@ -195,4 +195,4 @@ TextareaSuggest.defaultProps = {
   suggestList: [],
 };
 
-export default TextareaSuggest;
+module.exports = TextareaSuggest;
