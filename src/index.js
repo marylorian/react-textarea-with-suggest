@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import once from "lodash.once";
-import "./styles.css";
+import "../styles.css";
 
 class TextareaSuggest extends React.Component {
   constructor(props) {
