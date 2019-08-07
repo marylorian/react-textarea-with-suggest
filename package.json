@@ -3,6 +3,7 @@
   "version": "1.0.10",
   "main": "src/index.js",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "lodash.once": "^4.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
@@ -50,7 +51,6 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/helpers": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.0.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
     "@babel/plugin-proposal-function-sent": "^7.0.0",
