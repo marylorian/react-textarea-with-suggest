@@ -180,7 +180,7 @@ TextareaSuggest.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
   onSuggestItemRender: PropTypes.func,
-  searchMarker: PropTypes.string.isRequired,
+  searchMarker: PropTypes.string,
   searchRegexp: PropTypes.any,
   suggestList: PropTypes.array,
   value: PropTypes.string
