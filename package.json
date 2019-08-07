@@ -15,7 +15,7 @@
     "lib": "babel src/node_modules --out-dir lib --copy-files",
     "test": "node scripts/test.js --env=jsdom"
   },
-  "lisense": "MIT",
+  "license": "MIT",
   "eslintConfig": {
     "extends": "react-app"
   },
