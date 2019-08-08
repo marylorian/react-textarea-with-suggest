@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import once from "lodash.once";
+import TextareaAutosize from "react-textarea-autosize";
 import "../styles.css";
 
 class TextareaSuggest extends React.Component {
@@ -158,17 +159,25 @@ class TextareaSuggest extends React.Component {
   };
 
   render() {
-    const {value, ...props} = this.props;
+    const {autosizable, value, ...props} = this.props;
     const searchResults = this.renderSearchResults();
 
     return (
         <div className="textarea-suggest">
-        <textarea
-            {...props}
-            ref={this.initialize}
-            onChange={this.onChange}
-            value={this.state.text || value}
-        />
+          {autosizable
+              ? (<TextareaAutosize
+                  {...props}
+                  ref={this.initialize}
+                  onChange={this.onChange}
+                  value={this.state.text || value}
+              />)
+              : (<textarea
+                  {...props}
+                  ref={this.initialize}
+                  onChange={this.onChange}
+                  value={this.state.text || value}
+              />)
+          }
           {searchResults}
         </div>
     );
@@ -176,6 +185,7 @@ class TextareaSuggest extends React.Component {
 };
 
 TextareaSuggest.propTypes = {
+  autosizable: PropTypes.bool,
   className: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSearch: PropTypes.func.isRequired,
@@ -187,6 +197,7 @@ TextareaSuggest.propTypes = {
 };
 
 TextareaSuggest.defaultProps = {
+  autosizable: false,
   searchMarker: "@",
   searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
   suggestList: [],

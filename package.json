@@ -8,10 +8,14 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "react-textarea-autosize": "^7.1.0"
   },
   "scripts": {
-    "build": "babel src -d lib"
+    "start": "webpack-dev-server",
+    "build": "webpack --optimize-minimize --mode production",
+    "lib": "babel src -d lib",
+    "test": "node scripts/test.js --env=jsdom"
   },
   "license": "MIT",
   "eslintConfig": {
@@ -60,20 +64,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/cli": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
-    "@babel/plugin-proposal-function-sent": "^7.0.0",
-    "@babel/plugin-proposal-json-strings": "^7.0.0",
-    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
-    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/plugin-syntax-import-meta": "^7.0.0",
-    "@babel/plugin-transform-arrow-functions": "^7.2.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.1.0",
     "uglifyjs-webpack-plugin": "^2.2.0",

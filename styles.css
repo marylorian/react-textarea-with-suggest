@@ -1,3 +1,5 @@
+.textarea-suggest {
+    resize: none; }
 .textarea-suggest--results {
     position: absolute;
     z-index: 150;

@@ -36,6 +36,7 @@ export default class MyApp extends React.Component {
 
 |Name|Default value|Required|Description|
 |----|-------------|--------|-----------|
+|autosizable|bool: false|no|using [`<TextareaAutosize>`](https://www.npmjs.com/package/react-textarea-autosize) instead  of `<textarea>` if true|
 |className|string: ""|no|className property for `<textarea>` element|
 |searchMarker|char: "@"|no|after this symbol will be inited search and onSearch function|
 |onChange|func: () => {}|yes|function on change value in textarea|
@@ -49,6 +50,7 @@ export default class MyApp extends React.Component {
 ## Using libraries
  - "prop-types"
  - "lodash.once"
+ - "react-textarea-autosize" (optionally)
 
 ## License
 Copyright (c) 2019 Maria Lobareva Licensed under the [The MIT License (MIT)](http://opensource.org/licenses/MIT).
