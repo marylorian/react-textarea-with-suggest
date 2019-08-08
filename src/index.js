@@ -200,7 +200,7 @@ TextareaSuggest.defaultProps = {
   autosizable: false,
   searchMarker: "@",
   searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
-  suggestList: [],
+  suggestList: []
 };
 
 module.exports = TextareaSuggest;
