@@ -12,13 +12,32 @@ import once from "lodash.once";
 import TextareaAutosize from "react-textarea-autosize";
 import "../styles.css";
 
-class TextareaSuggest extends React.Component {
+module.exports = class TextareaSuggest extends React.Component {
   _textarea = null;
   _element = null;
 
   state = {
     needStartSearch: this.props.value && this.props.value.includes(this.props.searchMarker),
     text: this.props.value || ""
+  };
+
+  static propTypes = {
+    autosizable: PropTypes.bool,
+    className: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired,
+    onSuggestItemRender: PropTypes.func,
+    searchMarker: PropTypes.string,
+    searchRegexp: PropTypes.any,
+    suggestList: PropTypes.array,
+    value: PropTypes.string
+  };
+
+  defaultProps = {
+    autosizable: false,
+    searchMarker: "@",
+    searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
+    suggestList: []
   };
 
   componentDidMount() {
@@ -183,24 +202,3 @@ class TextareaSuggest extends React.Component {
     );
   }
 };
-
-TextareaSuggest.propTypes = {
-  autosizable: PropTypes.bool,
-  className: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onSearch: PropTypes.func.isRequired,
-  onSuggestItemRender: PropTypes.func,
-  searchMarker: PropTypes.string,
-  searchRegexp: PropTypes.any,
-  suggestList: PropTypes.array,
-  value: PropTypes.string
-};
-
-TextareaSuggest.defaultProps = {
-  autosizable: false,
-  searchMarker: "@",
-  searchRegexp: /@([a-z0\d\-.]+[a-z\d])/gim,
-  suggestList: []
-};
-
-module.exports = TextareaSuggest;
