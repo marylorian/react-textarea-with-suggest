@@ -42,6 +42,18 @@ export default class MyApp extends React.Component {
 |onChange|func: () => {}|yes|function on change value in textarea|
 |onSearch|func: () => {}|yes|function after input of searchMarker into textarea|
 |onSuggestItemRender|func|no|custom function for rendering each item in suggest|
+```
+//onSuggestItemRender
+
+item => 
+    <div className="textarea-suggest-item" onClick={() => this.setResult(item)}>
+        <div className="textarea-suggest-item--info">
+            <div>{item}</div>
+        </div>
+    </div>
+```
+|||||
+|----|-------------|--------|-----------|
 |searchRegexp|string: /@([a-z0\d\-.]+[a-z\d])/gim|no||
 |suggestList|array: []|no|rendering suggest when suggestList isn't empty, items rendering in onSuggestItemRender function|
 |value|string: ""|no|text value for `<textarea>`|

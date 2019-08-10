@@ -53,6 +53,15 @@ module.exports = class TextareaSuggest extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+        prevState.text !== this.props.value &&
+        prevProps.value !== this.props.value
+    ) {
+      this.setState({ text: this.props.value });
+    }
+  }
+
   _mobileAndTabletCheck = () => {
     let check = false;
     (function (a) {

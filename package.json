@@ -12,10 +12,7 @@
     "react-textarea-autosize": "^7.1.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack --optimize-minimize --mode production",
-    "lib": "babel src -d lib",
-    "test": "node scripts/test.js --env=jsdom"
+    "build": "babel src -d lib"
   },
   "license": "MIT",
   "eslintConfig": {
