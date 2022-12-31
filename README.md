@@ -1,5 +1,9 @@
 # react-textarea-with-suggest
-Textarea with suggest for React app
+Textarea with suggest for React app v2.0.0
+
+### Last changes:
+- supports TypeScript and new React versions
+- fixed bug with installing
 
 ## Install
 If you use npm
@@ -60,8 +64,6 @@ item =>
 |any else params for `<textarea>`| - | - |https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes|
 
 ## Using libraries
- - "prop-types"
- - "lodash.once"
  - "react-textarea-autosize" (optionally)
 
 ## License

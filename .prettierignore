@@ -1,0 +1,25 @@
+# Ignore artifacts:
+build
+coverage
+dist
+lib
+.env
+.eslintrc.js
+tsconfig.json
+**/*.md
+**/*.svg
+**/*.html
+**/*.ejs
+**/*.png
+**/*.eot
+**/*.woff
+**/*.ttf
+**/*.gif
+**/*.jpg
+**/*.jpeg
+package.json
+package-lock.json
+prettierrc.config.json
+.vscode
+.idea
+.rollup.cache
