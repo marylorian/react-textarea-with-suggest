@@ -1,16 +1,19 @@
 {
   "name": "example",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://marylorian.github.io/react-textarea-with-suggest/",
   "dependencies": {
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "react-scripts": "5.0.1",
     "react-textarea-with-suggest": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -31,7 +34,7 @@
     ]
   },
   "devDependencies": {
-    "lodash.once": "^4.1.1",
+    "gh-pages": "^4.0.0",
     "react-textarea-autosize": "^8.4.0"
   }
 }

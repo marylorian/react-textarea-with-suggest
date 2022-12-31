@@ -1,5 +1,4 @@
 .example {
-  text-align: center;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -12,4 +11,20 @@
 .example__textarea__results {
   border-radius: 4px;
   border: 1px solid;
+  background-color: white;
+}
+
+.example__textarea__custom-item {
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 8px;
+  text-align: left;
+}
+
+.example__textarea__custom-item p {
+  margin: 0;
+}
+
+.example__textarea__custom-item:hover {
+  background-color: burlywood;
 }

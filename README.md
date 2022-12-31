@@ -1,9 +1,11 @@
 # react-textarea-with-suggest
 Textarea with suggest for React app v2.0.0
 
-### Last changes:
-- supports TypeScript and new React versions
-- fixed bug with installing
+### Last changes
+[You can find in CHANGELOG.md](./CHANGELOG.md)
+
+### Demo
+[You can try component here](https://marylorian.github.io/react-textarea-with-suggest/demo)
 
 ## Install
 If you use npm
@@ -16,6 +18,28 @@ yarn add react-textarea-with-suggest
 ```
 
 ## Usage
+
+### For functional component
+```
+import Textarea from "react-textarea-with-suggest";
+
+const MyApp = (props) => {
+    const [text, setText] = useState<string>("")
+    const { results, search } = useMyOwnSearchResults();
+    
+    return <Textarea 
+        className="myapp-textarea"
+        value={text}
+        onChange={({ target }) => setText({ target.value })}
+        onSearch={(searchPhrase) => search(searchPhrase)}
+        suggestList={results}
+        searchMarker="@"
+        autoFocus
+    />
+}
+```
+
+### For class component
 ```
 import Textarea from "react-textarea-with-suggest";
 import { search } from "../actions"
@@ -40,31 +64,34 @@ export default class MyApp extends React.Component {
 
 |Name|Default value|Required|Description|
 |----|-------------|--------|-----------|
-|autosizable|bool: false|no|using [`<TextareaAutosize>`](https://www.npmjs.com/package/react-textarea-autosize) instead  of `<textarea>` if true|
+|autosizable|boolean: false|no|using [`<TextareaAutosize>`](https://www.npmjs.com/package/react-textarea-autosize) instead  of `<textarea>` if true|
+|value|string: ""|no|initial text value for `<textarea>`|
 |className|string: ""|no|className property for `<textarea>` element|
 |searchMarker|char: "@"|no|after this symbol will be inited search and onSearch function|
-|onChange|func: () => {}|yes|function on change value in textarea|
-|onSearch|func: () => {}|yes|function after input of searchMarker into textarea|
-|onSuggestItemRender|func|no|custom function for rendering each item in suggest|
+|searchRegexp|string: /@([a-z0\d\-.]+[a-z\d])/gim|no|default RegExp to detect search phrase after searchMarker|
+|closeSuggestOnFocusOut|boolean: false|no|closes suggest on `focusout` and returns back on `focusin`|
+|cancelSearchOnFocusOut|boolean: false|no|cancelling search on `focusout`|
+|onChange|func: (event: React.ChangeEvent) => {}|no|function on change value in textarea|
+|onSearch|func: (searchPhrase: string) => {}|yes|function after input of searchMarker into textarea|
+|suggestList|array: (string | CustomType)[]: []|no|rendering suggest when suggestList isn't empty, items rendering in customSuggestItemRenderer function|
+|customSuggestItemRenderer|func: (searchListItem: string | CustomType) => ReactNode|no|custom function for rendering each item in suggest|
 ```
-//onSuggestItemRender
+//customSuggestItemRenderer
 
-item => 
-    <div className="textarea-suggest-item" onClick={() => this.setResult(item)}>
-        <div className="textarea-suggest-item--info">
-            <div>{item}</div>
+(item) => 
+    <div className="textarea-suggest-item" onClick={myOwnClickHandler}>
+        <div className="textarea-suggest-item__info">
+            <div>{item.name}</div>
+            <div>{item.description}</div>
         </div>
     </div>
 ```
 |||||
 |----|-------------|--------|-----------|
-|searchRegexp|string: /@([a-z0\d\-.]+[a-z\d])/gim|no||
-|suggestList|array: []|no|rendering suggest when suggestList isn't empty, items rendering in onSuggestItemRender function|
-|value|string: ""|no|text value for `<textarea>`|
 |any else params for `<textarea>`| - | - |https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes|
 
 ## Using libraries
  - "react-textarea-autosize" (optionally)
 
 ## License
-Copyright (c) 2019 Maria Lobareva Licensed under the [The MIT License (MIT)](http://opensource.org/licenses/MIT).
+Copyright (c) 2019 Mariia Lobareva Licensed under the [The MIT License (MIT)](http://opensource.org/licenses/MIT).

@@ -15,6 +15,11 @@ export function usePrevious<T>(value: T): T | undefined {
 }
 
 export function isMobileAndTabletCheck(): boolean {
+  // ssr
+  if (typeof navigator === "undefined" || typeof window === "undefined") {
+    return false;
+  }
+
   let check = false;
   (function (a: string) {
     if (
