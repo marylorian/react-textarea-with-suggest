@@ -5,7 +5,7 @@ import React, {
   Fragment,
   RefObject,
 } from "react";
-import { Nullable } from "./utils";
+import { isMobileAndTabletCheck, Nullable } from "./utils";
 
 interface SuggestProps<T> {
   className?: string;
@@ -32,6 +32,8 @@ export const SuggestResults = <T extends ReactNode>({
     [textareaRef.current]
   );
 
+  const isMobile = isMobileAndTabletCheck();
+
   const renderSuggestItem = useCallback(
     (item: T) => {
       /**
@@ -41,17 +43,21 @@ export const SuggestResults = <T extends ReactNode>({
 
       if (customSuggestItemRenderer) {
         return (
-          // @ts-expect-error: onMouseDown exists
-          <Fragment onMouseDown={onItemClickHandler(item)}>
+          <div
+            className="textarea-suggest-item"
+            onMouseDown={!isMobile ? onItemClickHandler(item) : undefined}
+            onTouchStart={isMobile ? onItemClickHandler(item) : undefined}
+          >
             {customSuggestItemRenderer(item)}
-          </Fragment>
+          </div>
         );
       }
 
       return (
         <div
           className="textarea-suggest-item"
-          onMouseDown={onItemClickHandler(item)}
+          onMouseDown={!isMobile ? onItemClickHandler(item) : undefined}
+          onTouchStart={isMobile ? onItemClickHandler(item) : undefined}
         >
           <div className="textarea-suggest-item__info">
             <div>{item}</div>
@@ -64,7 +70,9 @@ export const SuggestResults = <T extends ReactNode>({
 
   return (
     <div
-      className={`textarea-suggest__results ${className ? `${className}__results` : ""}`}
+      className={`textarea-suggest__results ${
+        className ? `${className}__results` : ""
+      }`}
       style={{ position: "absolute", width, left }}
     >
       {values.map((item: T, index: number) => (

@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.2 (2022-12-31)
+
+**Fixed bugs:**
+- fixed bug with click on suggest items rendered by customSuggestItemRenderer on mobile devices
+
 ## v2.1.1 (2022-12-31)
 
 **Fixed bugs:**
