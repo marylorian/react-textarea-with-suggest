@@ -5,7 +5,7 @@ Textarea with suggest for React app v2.0.0
 [You can find in CHANGELOG.md](./CHANGELOG.md)
 
 ### Demo
-[You can try component here](https://marylorian.github.io/react-textarea-with-suggest/demo)
+[You can try component here](https://marylorian.github.io/react-textarea-with-suggest/)
 
 ## Install
 If you use npm
@@ -73,8 +73,8 @@ export default class MyApp extends React.Component {
 |cancelSearchOnFocusOut|boolean: false|no|cancelling search on `focusout`|
 |onChange|func: (event: React.ChangeEvent) => {}|no|function on change value in textarea|
 |onSearch|func: (searchPhrase: string) => {}|yes|function after input of searchMarker into textarea|
-|suggestList|array: (string | CustomType)[]: []|no|rendering suggest when suggestList isn't empty, items rendering in customSuggestItemRenderer function|
-|customSuggestItemRenderer|func: (searchListItem: string | CustomType) => ReactNode|no|custom function for rendering each item in suggest|
+|suggestList|array: (string OR CustomType)[]: []|no|rendering suggest when suggestList isn't empty, items rendering in customSuggestItemRenderer function|
+|customSuggestItemRenderer|func: (searchListItem: string OR CustomType) => ReactNode|no|custom function for rendering each item in suggest|
 ```
 //customSuggestItemRenderer
 
