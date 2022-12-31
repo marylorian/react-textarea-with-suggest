@@ -64,7 +64,7 @@ export const SuggestResults = <T extends ReactNode>({
 
   return (
     <div
-      className={`textarea-suggest__results ${className}__results`}
+      className={`textarea-suggest__results ${className ? `${className}__results` : ""}`}
       style={{ position: "absolute", width, left }}
     >
       {values.map((item: T, index: number) => (

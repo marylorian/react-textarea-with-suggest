@@ -230,7 +230,8 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
         value={text || value}
       />
 
-      <SuggestResults
+      <SuggestResults 
+        className={props.className}
         textareaRef={textareaRef}
         values={suggestList}
         isHidden={isSuggestHidden || !needStartSearch}
