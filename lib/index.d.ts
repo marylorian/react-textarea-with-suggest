@@ -8,7 +8,6 @@
  * LICENSE MIT.
  */
 import React, { ReactNode, HTMLProps, ChangeEvent } from "react";
-import "../styles.css";
 interface TextareaSuggestProps<SuggestItemType> extends Partial<Omit<HTMLProps<HTMLTextAreaElement>, "style">> {
     className?: string;
     autosizable?: boolean;

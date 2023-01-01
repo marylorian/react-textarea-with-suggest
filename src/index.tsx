@@ -18,10 +18,16 @@ import React, {
   HTMLProps,
   ChangeEvent,
   FocusEvent,
+  ChangeEventHandler,
 } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { usePrevious, isMobileAndTabletCheck, Nullable } from "./utils";
-import "../styles.css";
+import {
+  usePrevious,
+  isMobileAndTabletCheck,
+  Nullable,
+  setNativeValue,
+  createSyntheticEventByTarget,
+} from "./utils";
 import { SuggestResults } from "./suggest";
 
 interface TextareaSuggestProps<SuggestItemType>
@@ -88,22 +94,25 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
   }, []);
 
   useEffect(() => {
-    if (prevText !== value && prevValue !== value) {
-      setText(value);
+    if (value && prevText !== value) {
+      if (prevValue !== value) {
+        setText(value);
+        // @ts-expect-error: react+ts don't allow to extend ChangeEventHandler<HTMLTextAreaElement>
+        handleChange(undefined, value);
+      }
     }
   }, [text, value, prevText, prevValue]);
 
   const handleFocusOut = useCallback(
-    (e: FocusEvent<HTMLTextAreaElement>) =>
-      setTimeout(() => {
-        if (closeSuggestOnFocusOut) {
-          setIsSuggestHidden(true);
-        }
-        if (cancelSearchOnFocusOut) {
-          setNeedStartSearch(false);
-        }
-        props.onBlur?.(e);
-      }, 0),
+    (e: FocusEvent<HTMLTextAreaElement>) => {
+      if (closeSuggestOnFocusOut) {
+        setIsSuggestHidden(true);
+      }
+      if (cancelSearchOnFocusOut) {
+        setNeedStartSearch(false);
+      }
+      props.onBlur?.(e);
+    },
     [closeSuggestOnFocusOut, cancelSearchOnFocusOut, props.onBlur]
   );
 
@@ -117,11 +126,20 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     [closeSuggestOnFocusOut, cancelSearchOnFocusOut, props.onFocus]
   );
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const {
-      currentTarget: { value = text },
-      isTrusted = true,
-    } = event;
+  const handleChange: ChangeEventHandler<HTMLTextAreaElement> = (
+    event?: ChangeEvent<HTMLTextAreaElement>,
+    controllingValue: string = ""
+  ) => {
+    const value = event
+      ? typeof event.currentTarget?.value === "undefined"
+        ? text
+        : event.currentTarget?.value || text
+      : controllingValue;
+    const isTrusted = event
+      ? typeof event.isTrusted === "undefined"
+        ? true
+        : event.isTrusted
+      : false;
 
     const selectionEnd = textareaRef.current?.selectionEnd;
     const last = selectionEnd
@@ -131,6 +149,9 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     setText(value);
 
     if (last === searchMarker) {
+      if (controllingValue) {
+        setIsSuggestHidden(false);
+      }
       setNeedStartSearch(true);
       //TODO: clear suggestList here
     }
@@ -143,38 +164,49 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     }
 
     if (last !== searchMarker && needStartSearch) {
-      let textWithResults = value.slice(0, selectionEnd);
-      let results = textWithResults
+      const textWithResults = value.slice(0, selectionEnd);
+      const results = textWithResults
         .slice(textWithResults.lastIndexOf(searchMarker))
         .match(searchRegexp);
-      let result = results ? results[0].slice(1) : last;
+      const result = results ? results[0].slice(1) : last;
 
       onSearch(result);
     }
 
-    if (isTrusted) {
+    if (!event && textareaRef.current) {
+      textareaRef.current.value = value;
+    }
+
+    if (event && isTrusted) {
       return onChange?.(event);
     }
 
-    return onChange?.({
-      ...event,
-      currentTarget: textareaRef.current as EventTarget & HTMLTextAreaElement,
-      target: textareaRef.current as EventTarget & HTMLTextAreaElement,
-    });
+    if (event && !isTrusted) {
+      return onChange?.({
+        ...event,
+        currentTarget: textareaRef.current as EventTarget & HTMLTextAreaElement,
+        target: textareaRef.current as EventTarget & HTMLTextAreaElement,
+      });
+    }
+
+    const eventToDispatch = createSyntheticEventByTarget<HTMLTextAreaElement>(
+      textareaRef.current as HTMLTextAreaElement
+    );
+
+    return onChange?.(eventToDispatch as ChangeEvent<HTMLTextAreaElement>);
   };
 
   const setResultHandler = useCallback(
     (result: SuggestItemType) => () => {
-      let selectionEnd = textareaRef.current?.selectionEnd;
-      let position = text.slice(0, selectionEnd).lastIndexOf(searchMarker);
-      let textWithResult = text.slice(position);
+      const selectionEnd = textareaRef.current?.selectionEnd;
+      const position = text.slice(0, selectionEnd).lastIndexOf(searchMarker);
+      const textWithResult = text.slice(position);
 
       if (position !== -1) {
         let endPosition =
           (textWithResult.includes(" ")
             ? textWithResult.indexOf(" ")
             : text.length) + position;
-        let newValue;
 
         if (textWithResult.lastIndexOf(searchMarker) > 0) {
           endPosition = textWithResult.lastIndexOf(searchMarker) + position;
@@ -183,7 +215,7 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
           endPosition = text.length;
         }
 
-        newValue =
+        const newValue =
           text.slice(0, position || 0) +
           text
             .slice(position)
@@ -192,13 +224,8 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
               `${searchMarker}${result} `
             );
 
-        if (textareaRef.current) {
-          textareaRef.current.value = newValue;
-          textareaRef.current.focus();
-        }
-
         if (isMobileAndTabletCheck()) {
-          let endCaretPosition =
+          const endCaretPosition =
             newValue.slice(position).indexOf(" ") + position + 1;
           textareaRef.current?.setSelectionRange(
             endCaretPosition,
@@ -206,11 +233,10 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
           );
         }
 
-        let event = new Event("onchange", {
-          bubbles: true,
-          cancelable: false,
-        });
-        textareaRef.current?.onchange?.(event);
+        if (textareaRef.current) {
+          setNativeValue(textareaRef.current, newValue);
+          setTimeout(() => textareaRef.current?.focus());
+        }
 
         setNeedStartSearch(false);
         setText(newValue);

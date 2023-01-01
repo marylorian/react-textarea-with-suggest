@@ -1,11 +1,6 @@
-.textarea-suggest {
-  resize: none;
-}
 .textarea-suggest__results {
   position: absolute;
   z-index: 150;
-  min-width: 220px;
-  margin: 0 16px;
   animation: ascent 0.2s forwards;
   border-radius: 9px;
   background-color: #fff;

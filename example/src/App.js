@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Textarea from "react-textarea-with-suggest";
+import "react-textarea-with-suggest/lib/styles.css";
 import "./App.css";
 
 const randomResults = [
@@ -19,7 +20,29 @@ const randomResults = [
   "Good bye",
 ];
 
+function ExampleItem({ title, codeSnippet, pretty, children }) {
+  return (
+    <div className="example__item">
+      <p>
+        <strong>{title}</strong>
+      </p>
+      <pre>
+        <code>
+          {pretty
+            ? codeSnippet
+            : codeSnippet
+                .split(" ")
+                .map((line, i) => (i === 0 ? line : `    ${line}`))
+                .join("\n")}
+        </code>
+      </pre>
+      {children}
+    </div>
+  );
+}
+
 function App() {
+  const [controllingValue, setControllingValue] = useState("");
   const [results, setResults] = useState(undefined);
 
   const onSearch = (searchPhrase) => {
@@ -35,46 +58,29 @@ function App() {
   };
 
   const onChange = (e) => {
-    console.log("onChange", e.target.value);
+    console.log("onChange", e.target.value, e);
   };
 
   return (
     <div className="example">
       <h1>TextareaWithSuggest Example</h1>
 
-      <div className="example__item">
-        <p>Default</p>
-        <p>
-          <code>
-            {`<Textarea
-          className="example__textarea"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="Default"
+        codeSnippet={`<Textarea className="example__textarea" onChange={onChange} onSearch={onSearch} suggestList={results} />`}
+      >
         <Textarea
           className="example__textarea"
           onChange={onChange}
           onSearch={onSearch}
           suggestList={results}
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>Autosizable</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
-          className="example__textarea"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="Autosizable"
+        codeSnippet={`<Textarea autosizable className="example__textarea" onChange={onChange} onSearch={onSearch} suggestList={results} />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
@@ -82,88 +88,86 @@ function App() {
           onSearch={onSearch}
           suggestList={results}
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>With initial value</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
-          className="example__textarea"
-          value="Initial Value"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="With initial value"
+        codeSnippet={`<Textarea autosizable className="example__textarea" value="Initial_Value" onChange={onChange} onSearch={onSearch} suggestList={results} />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
-          value="Initial Value"
+          value="Initial_Value"
           onChange={onChange}
           onSearch={onSearch}
           suggestList={results}
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>With customSuggestItemRenderer</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
+      <ExampleItem
+        title="As controlled component"
+        codeSnippet={`<Textarea className="example__textarea" value={controllingValue} onChange={onChange} onSearch={onSearch} suggestList={results} />`}
+      >
+        <div className="example__item__input">
+          <label htmlFor="textarea-controlling-value">
+            Controlling value for TextareaWithSuggest:{" "}
+          </label>
+          <input
+            type="text"
+            name="textarea-controlling-value"
+            value={controllingValue}
+            onChange={(e) => setControllingValue(e.target.value)}
+          />
+        </div>
+
+        <Textarea
           className="example__textarea"
-          onChange={onChange}
+          value={controllingValue}
+          onChange={(e) => {
+            onChange(e);
+            setControllingValue(e.target.value);
+          }}
           onSearch={onSearch}
           suggestList={results}
-          customSuggestItemRenderer={(result, defaultOnClick) => (
-            <div
-              className="example__textarea__custom-item"
-              onClick={defaultOnClick}
-            >
-              <p>
-                Custom: <span>{result}</span>
-              </p>
-            </div>
-          )}
-        />`}
-          </code>
-        </p>
+        />
+      </ExampleItem>
+
+      <ExampleItem
+        title="With customSuggestItemRenderer"
+        pretty
+        codeSnippet={`
+<Textarea 
+  autosizable 
+  className="example__textarea" 
+  onChange={onChange} 
+  onSearch={onSearch} 
+  suggestList={results} 
+  customSuggestItemRenderer={result => (
+    <div className="example__textarea__custom-item">
+      <p>Custom: <span>{result}</span></p>
+    </div>
+  )} />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
           onChange={onChange}
           onSearch={onSearch}
           suggestList={results}
-          customSuggestItemRenderer={(result, defaultOnClick) => (
-            <div
-              className="example__textarea__custom-item"
-              onClick={defaultOnClick}
-            >
+          customSuggestItemRenderer={(result) => (
+            <div className="example__textarea__custom-item">
               <p>
                 Custom: <span>{result}</span>
               </p>
             </div>
           )}
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>With custom searchMarker "#"</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
-          className="example__textarea"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-          searchMarker="#"
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="With custom searchMarker '#'"
+        codeSnippet={`<Textarea autosizable className="example__textarea" onChange={onChange} onSearch={onSearch} suggestList={results} searchMarker="#" />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
@@ -172,22 +176,12 @@ function App() {
           suggestList={results}
           searchMarker="#"
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>Closes suggests on focusout, returns back on focusin</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
-          className="example__textarea"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-          closeSuggestOnFocusOut
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="Closes suggests on focusout, returns back on focusin"
+        codeSnippet={`<Textarea autosizable className="example__textarea" onChange={onChange} onSearch={onSearch} suggestList={results} closeSuggestOnFocusOut />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
@@ -196,22 +190,12 @@ function App() {
           suggestList={results}
           closeSuggestOnFocusOut
         />
-      </div>
+      </ExampleItem>
 
-      <div className="example__item">
-        <p>Cancelling search on focusout</p>
-        <p>
-          <code>
-            {`<Textarea
-          autosizable
-          className="example__textarea"
-          onChange={onChange}
-          onSearch={onSearch}
-          suggestList={results}
-          cancelSearchOnFocusOut
-        />`}
-          </code>
-        </p>
+      <ExampleItem
+        title="Cancelling search on focusout"
+        codeSnippet={`<Textarea autosizable className="example__textarea" onChange={onChange} onSearch={onSearch} suggestList={results} cancelSearchOnFocusOut />`}
+      >
         <Textarea
           autosizable
           className="example__textarea"
@@ -220,7 +204,7 @@ function App() {
           suggestList={results}
           cancelSearchOnFocusOut
         />
-      </div>
+      </ExampleItem>
     </div>
   );
 }

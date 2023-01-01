@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, SyntheticEvent, ChangeEvent } from "react";
 
 export type Nullable<T> = T | null;
 
@@ -38,3 +38,67 @@ export function isMobileAndTabletCheck(): boolean {
   );
   return check;
 }
+
+/**
+ * syntetic events no longer supported by react
+ * https://github.com/facebook/react/issues/12344
+ */
+export function setNativeValue(element: Element, value: string) {
+  const valueSetter = Object.getOwnPropertyDescriptor(element, "value")?.set;
+  const prototype = Object.getPrototypeOf(element);
+
+  const prototypeValueSetter = Object.getOwnPropertyDescriptor(
+    prototype,
+    "value"
+  )?.set;
+
+  if (valueSetter && valueSetter !== prototypeValueSetter) {
+    prototypeValueSetter?.call(element, value);
+  } else {
+    valueSetter?.call(element, value);
+  }
+
+  element.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+export const createSyntheticEventByTarget = <T extends Element>(
+  target: T,
+  eventType?: string
+): SyntheticEvent<T> => {
+  const event = new Event("change" || eventType, { bubbles: true });
+  Object.defineProperty(event, "target", { writable: false, value: target });
+
+  return createSyntheticEvent(event) as ChangeEvent<typeof target>;
+};
+
+export const createSyntheticEvent = <T extends Element, E extends Event>(
+  event: E
+): SyntheticEvent<T, E> => {
+  let isDefaultPrevented = false;
+  let isPropagationStopped = false;
+  const preventDefault = () => {
+    isDefaultPrevented = true;
+    event.preventDefault();
+  };
+  const stopPropagation = () => {
+    isPropagationStopped = true;
+    event.stopPropagation();
+  };
+  return {
+    nativeEvent: event,
+    currentTarget: event.currentTarget as EventTarget & T,
+    target: event.target as EventTarget & T,
+    bubbles: event.bubbles,
+    cancelable: event.cancelable,
+    defaultPrevented: event.defaultPrevented,
+    eventPhase: event.eventPhase,
+    isTrusted: event.isTrusted,
+    preventDefault,
+    isDefaultPrevented: () => isDefaultPrevented,
+    stopPropagation,
+    isPropagationStopped: () => isPropagationStopped,
+    persist: () => {},
+    timeStamp: event.timeStamp,
+    type: event.type,
+  };
+};

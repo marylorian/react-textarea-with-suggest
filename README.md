@@ -1,5 +1,7 @@
 # react-textarea-with-suggest
-Textarea with suggest for React app v2.0.0
+Textarea with suggest for React app v2
+
+[![npm version](https://badge.fury.io/js/react-textarea-with-suggest.svg)](https://badge.fury.io/js/react-textarea-with-suggest)
 
 ### Last changes
 [You can find in CHANGELOG.md](./CHANGELOG.md)
@@ -18,6 +20,12 @@ yarn add react-textarea-with-suggest
 ```
 
 ## Usage
+
+### To use built-in styles
+
+```
+import "react-textarea-with-suggest/lib/styles.css";
+```
 
 ### For functional component
 ```

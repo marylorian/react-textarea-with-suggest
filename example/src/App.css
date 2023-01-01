@@ -28,3 +28,11 @@
 .example__textarea__custom-item:hover {
   background-color: burlywood;
 }
+
+.example__item {
+  margin-bottom: 24px;
+}
+
+.example__item__input {
+  margin: 16px 0;
+}

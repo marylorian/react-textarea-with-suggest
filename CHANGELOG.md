@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.1.3 (2023-01-01)
+
+**Fixed bugs:**
+- fixes bug with onchange event value, when value from suggest was overriden by react
+- fixes bug with old `target.value` for case with completely controlled value
+- fixed margins in default .css
+- removes default .css file from default imports
+
 ## v2.1.2 (2022-12-31)
 
 **Fixed bugs:**
