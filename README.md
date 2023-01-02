@@ -1,7 +1,13 @@
 # react-textarea-with-suggest
 Textarea with suggest for React app v2
 
-[![npm version](https://badge.fury.io/js/react-textarea-with-suggest.svg)](https://badge.fury.io/js/react-textarea-with-suggest)
+![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/marylorian/react-textarea-with-suggest/master?label=latest%20version)
+![NPM](https://img.shields.io/npm/l/react-textarea-with-suggest)
+![npm type definitions](https://img.shields.io/npm/types/react-textarea-with-suggest)
+![npm peer dependency version](https://img.shields.io/npm/dependency-version/react-textarea-with-suggest/peer/react)
+![npm peer dependency version](https://img.shields.io/npm/dependency-version/react-textarea-with-suggest/peer/react-dom)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/react-textarea-with-suggest/latest)
+![Server Side Rendering](https://img.shields.io/badge/SSR-supported-green)
 
 ### Last changes
 [You can find in CHANGELOG.md](./CHANGELOG.md)

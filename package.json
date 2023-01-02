@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/marylorian/react-textarea-with-suggest/issues"
   },
-  "homepage": "https://github.com/marylorian/react-textarea-with-suggest#readme",
+  "homepage": "https://marylorian.github.io/react-textarea-with-suggest/",
   "browserslist": {
     "production": [
       ">0.2%",
