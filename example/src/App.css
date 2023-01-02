@@ -25,7 +25,8 @@
   margin: 0;
 }
 
-.example__textarea__custom-item:hover {
+.example__textarea__custom-item:hover,
+.example__textarea__results__item_selected {
   background-color: burlywood;
 }
 

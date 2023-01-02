@@ -82,7 +82,7 @@ export default class MyApp extends React.Component {
 |onChange|func: (event: React.ChangeEvent) => {}|no|function on change value in textarea|
 |onSearch|func: (searchPhrase: string) => {}|yes|function after input of searchMarker into textarea|
 |suggestList|array: (string OR CustomType)[]: []|no|rendering suggest when suggestList isn't empty, items rendering in customSuggestItemRenderer function|
-|customSuggestItemRenderer|func: (searchListItem: string OR CustomType) => ReactNode|no|custom function for rendering each item in suggest|
+|customSuggestItemRenderer|func: (searchListItem: string OR CustomType, isSelected: boolean) => ReactNode|no|custom function for rendering each item in suggest, second argument is true if user navigates through items by keyboard and stops on current element|
 ```
 //customSuggestItemRenderer
 

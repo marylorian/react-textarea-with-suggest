@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.2.0 (2023-01-02)
+
+**Implemented enhancements:**
+- adds `keydown` handling to navigate through suggested variants by ArrowDown, ArrowUp, Enter (to apply selected item), Escape (to stop searching)
+
 ## v2.1.4 (2023-01-02)
 
 **Fixed bugs:**

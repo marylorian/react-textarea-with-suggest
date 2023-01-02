@@ -19,6 +19,7 @@ import React, {
   ChangeEvent,
   FocusEvent,
   ChangeEventHandler,
+  KeyboardEvent,
 } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import {
@@ -70,6 +71,9 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     value?.includes(searchMarker)
   );
   const [isSuggestHidden, setIsSuggestHidden] = useState<boolean>(true);
+  const [selectedItemIndex, setSelectedItemIndex] = useState<
+    number | undefined
+  >(undefined);
 
   const prevText = usePrevious<string>(text);
   const prevValue = usePrevious<string>(value);
@@ -102,6 +106,67 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
       }
     }
   }, [text, value, prevText, prevValue]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      const { code } = e;
+      const isSuggestOpened =
+        needStartSearch && !isSuggestHidden && suggestList.length;
+
+      props.onKeyDown?.(e);
+
+      if (
+        !isSuggestOpened ||
+        !["ArrowUp", "ArrowDown", "Enter", "Escape"].includes(code)
+      ) {
+        return;
+      }
+
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+
+      switch (code) {
+        case "ArrowUp": {
+          e.preventDefault();
+
+          return setSelectedItemIndex((curIndex) =>
+            typeof curIndex === "undefined" || curIndex === 0
+              ? suggestList.length - 1
+              : curIndex - 1
+          );
+        }
+        case "ArrowDown": {
+          e.preventDefault();
+
+          return setSelectedItemIndex((curIndex) =>
+            typeof curIndex === "undefined" ||
+            curIndex === suggestList.length - 1
+              ? 0
+              : curIndex + 1
+          );
+        }
+        case "Enter": {
+          if (selectedItemIndex !== undefined) {
+            e.preventDefault();
+
+            setResultHandler(suggestList[selectedItemIndex])();
+          }
+          return;
+        }
+        case "Escape": {
+          setNeedStartSearch(false);
+          setSelectedItemIndex(undefined);
+        }
+      }
+    },
+    [
+      props.onKeyDown,
+      selectedItemIndex,
+      suggestList,
+      needStartSearch,
+      isSuggestHidden,
+    ]
+  );
 
   const handleFocusOut = useCallback(
     (e: FocusEvent<HTMLTextAreaElement>) => {
@@ -238,6 +303,7 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
           setTimeout(() => textareaRef.current?.focus());
         }
 
+        setSelectedItemIndex(undefined);
         setNeedStartSearch(false);
         setText(newValue);
       }
@@ -249,6 +315,7 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     <div className="textarea-suggest">
       <Textarea
         {...props}
+        onKeyDown={handleKeyDown}
         onBlur={handleFocusOut}
         onFocus={handleFocusIn}
         ref={textareaRef}
@@ -260,6 +327,7 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
         className={props.className}
         textareaRef={textareaRef}
         values={suggestList}
+        selectedItemIndex={selectedItemIndex}
         isHidden={isSuggestHidden || !needStartSearch}
         customSuggestItemRenderer={customSuggestItemRenderer}
         onItemClickHandler={setResultHandler}

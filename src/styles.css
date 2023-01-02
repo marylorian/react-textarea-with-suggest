@@ -25,7 +25,8 @@
 .textarea-suggest-item:last-child {
   padding-bottom: 8px;
 }
-.textarea-suggest-item:hover {
+.textarea-suggest-item:hover,
+.textarea-suggest-item_selected {
   background-color: #f2f3f9;
 }
 .textarea-suggest-item--info {
