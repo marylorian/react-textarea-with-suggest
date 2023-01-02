@@ -133,7 +133,7 @@ const TextareaSuggest = <SuggestItemType extends ReactNode>({
     const value = event
       ? typeof event.currentTarget?.value === "undefined"
         ? text
-        : event.currentTarget?.value || text
+        : event.currentTarget?.value || ""
       : controllingValue;
     const isTrusted = event
       ? typeof event.isTrusted === "undefined"

@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.4 (2023-01-02)
+
+**Fixed bugs:**
+- fixes with clearing input
+
 ## v2.1.3 (2023-01-01)
 
 **Fixed bugs:**
