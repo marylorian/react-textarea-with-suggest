@@ -1,7 +1,7 @@
 # react-textarea-with-suggest
 Textarea with suggest for React app v2
 
-![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/marylorian/react-textarea-with-suggest/master?label=latest%20version)
+[![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/marylorian/react-textarea-with-suggest/master?label=latest%20version)](https://www.npmjs.com/package/react-textarea-with-suggest)
 ![NPM](https://img.shields.io/npm/l/react-textarea-with-suggest)
 ![npm type definitions](https://img.shields.io/npm/types/react-textarea-with-suggest)
 ![npm peer dependency version](https://img.shields.io/npm/dependency-version/react-textarea-with-suggest/peer/react)
