@@ -16,8 +16,12 @@ export default [
         strict: false,
       },
     ],
-    plugins: [typescript(), babel({ babelHelpers: "bundled" }), terser()],
-    external: ["react", "react-dom"],
+    plugins: [
+      typescript({ sourceMap: true, inlineSources: true }),
+      babel({ babelHelpers: "bundled" }),
+      terser(),
+    ],
+    external: ["react", "react-dom", "react-textarea-autosize"],
   },
   {
     input: "src/styles.css",
