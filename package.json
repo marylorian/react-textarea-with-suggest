@@ -1,6 +1,6 @@
 {
   "name": "react-textarea-with-suggest",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Textarea with suggest for React app",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
