@@ -63,7 +63,22 @@ function App() {
 
   return (
     <div className="example">
-      <h1>TextareaWithSuggest Example</h1>
+      <h1>Textarea With Suggest Example page</h1>
+
+      <p>
+        You can check <code>react-textarea-with-suggest</code> npm page{" "}
+        <a
+          href="https://www.npmjs.com/package/react-textarea-with-suggest"
+          target="_blank"
+          rel="noreferrer"
+        >
+          here
+        </a>
+      </p>
+      <p>
+        You can check <code>onChange</code> and <code>onSearch</code> firing in
+        your Browser console
+      </p>
 
       <ExampleItem
         title="Default"

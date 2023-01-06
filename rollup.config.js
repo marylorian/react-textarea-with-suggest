@@ -17,7 +17,11 @@ export default [
       },
     ],
     plugins: [
-      typescript({ sourceMap: true, inlineSources: true }),
+      typescript({
+        sourceMap: true,
+        inlineSources: true,
+        exclude: ["**/testUtils/*"],
+      }),
       babel({ babelHelpers: "bundled" }),
       terser(),
     ],

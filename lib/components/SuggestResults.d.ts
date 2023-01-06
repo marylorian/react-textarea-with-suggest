@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import { CustomSuggestItemRenderer, Nullable, OnItemClickHandler } from "../types";
-interface SuggestProps<T> {
+export interface SuggestProps<T> {
     className?: string;
     textareaRef: RefObject<Nullable<HTMLTextAreaElement>>;
     selectedItemIndex?: number;
@@ -10,4 +10,3 @@ interface SuggestProps<T> {
     customSuggestItemRenderer?: CustomSuggestItemRenderer<T>;
 }
 export declare const SuggestResults: <T extends React.ReactNode>({ textareaRef, values, isHidden, className, selectedItemIndex, customSuggestItemRenderer, onItemClickHandler, }: SuggestProps<T>) => JSX.Element | null;
-export {};

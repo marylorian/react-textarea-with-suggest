@@ -96,6 +96,7 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
     }
   }, []);
 
+  // controllable component logic
   useEffect(() => {
     if (value && prevText !== value) {
       if (prevValue !== value) {
@@ -263,46 +264,48 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
       const position = text.slice(0, selectionEnd).lastIndexOf(searchMarker);
       const textWithResult = text.slice(position);
 
-      if (position !== -1) {
-        let endPosition =
-          (textWithResult.includes(" ")
-            ? textWithResult.indexOf(" ")
-            : text.length) + position;
-
-        if (textWithResult.lastIndexOf(searchMarker) > 0) {
-          endPosition = textWithResult.lastIndexOf(searchMarker) + position;
-        }
-        if (!endPosition || endPosition < position) {
-          endPosition = text.length;
-        }
-
-        const newValue =
-          text.slice(0, position || 0) +
-          text
-            .slice(position)
-            .replace(
-              text.slice(position, endPosition),
-              `${searchMarker}${result} `
-            );
-
-        if (isMobileAndTabletCheck()) {
-          const endCaretPosition =
-            newValue.slice(position).indexOf(" ") + position + 1;
-          textareaRef.current?.setSelectionRange(
-            endCaretPosition,
-            endCaretPosition
-          );
-        }
-
-        if (textareaRef.current) {
-          setNativeValue(textareaRef.current, newValue);
-          setTimeout(() => textareaRef.current?.focus());
-        }
-
-        setSelectedItemIndex(undefined);
-        setNeedStartSearch(false);
-        setText(newValue);
+      if (position === -1) {
+        return;
       }
+
+      let endPosition =
+        (textWithResult.includes(" ")
+          ? textWithResult.indexOf(" ")
+          : text.length) + position;
+
+      if (textWithResult.lastIndexOf(searchMarker) > 0) {
+        endPosition = textWithResult.lastIndexOf(searchMarker) + position;
+      }
+      if (!endPosition || endPosition < position) {
+        endPosition = text.length;
+      }
+
+      const newValue =
+        text.slice(0, position || 0) +
+        text
+          .slice(position)
+          .replace(
+            text.slice(position, endPosition),
+            `${searchMarker}${result} `
+          );
+
+      if (isMobileAndTabletCheck()) {
+        const endCaretPosition =
+          newValue.slice(position).indexOf(" ") + position + 1;
+        textareaRef.current?.setSelectionRange(
+          endCaretPosition,
+          endCaretPosition
+        );
+      }
+
+      if (textareaRef.current) {
+        setNativeValue(textareaRef.current, newValue);
+        setTimeout(() => textareaRef.current?.focus());
+      }
+
+      setSelectedItemIndex(undefined);
+      setNeedStartSearch(false);
+      setText(newValue);
     },
     [textareaRef, text]
   );

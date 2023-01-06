@@ -17,7 +17,7 @@
     "build": "rollup -c",
     "start": "rollup -c -w",
     "deploy:demo": "cd ./example && rm -rf node_modules && rm package-lock.json && npm i && npm run deploy && cd ../",
-    "test": "jest ./src --coverage"
+    "test": "jest --coverage --"
   },
   "license": "MIT",
   "eslintConfig": {
@@ -58,12 +58,7 @@
       "@babel/preset-typescript"
     ],
     "plugins": [
-      [
-        "@babel/plugin-proposal-class-properties",
-        {
-          "loose": true
-        }
-      ]
+      "@babel/plugin-proposal-class-properties"
     ]
   },
   "peerDependencies": {
