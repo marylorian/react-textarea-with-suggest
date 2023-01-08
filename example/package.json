@@ -5,7 +5,6 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-scripts": "5.0.1",
     "react-textarea-with-suggest": "latest"
   },
   "scripts": {
@@ -35,6 +34,6 @@
   },
   "devDependencies": {
     "gh-pages": "^4.0.0",
-    "react-textarea-autosize": "^8.4.0"
+    "react-scripts": "^5.0.1"
   }
 }

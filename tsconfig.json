@@ -22,5 +22,12 @@
         "esModuleInterop": true, 
       },
     "include": ["src"],
-    "exclude": ["node_modules", "lib", "example", "rollup.config.js", "src/**/*.test.ts", "src/**/*.test.tsx"]
+    "exclude": [
+      "node_modules",
+      "lib",
+      "example",
+      "rollup.config.js",
+      "src/**/*.test.ts",
+      "src/**/*.test.tsx"
+    ]
 }

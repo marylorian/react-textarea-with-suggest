@@ -4,7 +4,7 @@ export const createSyntheticEventByTarget = <T extends Element>(
   target: T,
   eventType?: string
 ): SyntheticEvent<T> => {
-  const event = new Event("change" || eventType, { bubbles: true });
+  const event = new Event(eventType || "change", { bubbles: true });
   Object.defineProperty(event, "target", { writable: false, value: target });
 
   return createSyntheticEvent(event) as ChangeEvent<typeof target>;
