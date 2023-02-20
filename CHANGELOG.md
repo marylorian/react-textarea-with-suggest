@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.4.0 (2023-02-20)
+
+**Implemented enhancements:**
+[By @pazoozoo42 Pull Request](https://github.com/marylorian/react-textarea-with-suggest/pull/8):
+- added access to textarea DOM element from parent components through new `forwardedRef` prop. 
+- added TextareaAutosizeProps to the type definition to eliminate TS warning when using autoresizable textarea with TypeScript
+
+## v2.3.0 (2023-01-06)
+
+**Implemented enhancements:**
+- implemented unit-tests, set test coverage to 85% [by PR](https://github.com/marylorian/react-textarea-with-suggest/pull/7)
+
 ## v2.2.0 (2023-01-02)
 
 **Implemented enhancements:**
