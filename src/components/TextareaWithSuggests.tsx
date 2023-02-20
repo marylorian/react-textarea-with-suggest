@@ -19,8 +19,11 @@ import React, {
   FocusEvent,
   ChangeEventHandler,
   KeyboardEvent,
+  RefObject,
 } from "react";
-import TextareaAutosize from "react-textarea-autosize";
+import TextareaAutosize, {
+  TextareaAutosizeProps,
+} from "react-textarea-autosize";
 
 import {
   usePrevious,
@@ -38,7 +41,9 @@ import {
 } from "../constants";
 
 interface TextareaSuggestProps<SuggestItemType>
-  extends Partial<Omit<HTMLProps<HTMLTextAreaElement>, "style">> {
+  extends Partial<
+    Omit<TextareaAutosizeProps & HTMLProps<HTMLTextAreaElement>, "style">
+  > {
   className?: string;
   autosizable?: boolean;
   searchMarker?: string;
@@ -50,6 +55,7 @@ interface TextareaSuggestProps<SuggestItemType>
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onSearch: (newValue: string) => void;
   customSuggestItemRenderer?: CustomSuggestItemRenderer<SuggestItemType>;
+  forwardedRef?: RefObject<HTMLTextAreaElement>;
 }
 
 export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
@@ -60,6 +66,7 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
   suggestList = [],
   closeSuggestOnFocusOut = false,
   cancelSearchOnFocusOut = false,
+  forwardedRef = undefined,
   onSearch,
   onChange,
   customSuggestItemRenderer,
@@ -77,7 +84,9 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
   const prevText = usePrevious<string>(text);
   const prevValue = usePrevious<string>(value);
 
-  const textareaRef = useRef<Nullable<HTMLTextAreaElement>>(null);
+  const textareaRef = forwardedRef
+    ? forwardedRef
+    : useRef<Nullable<HTMLTextAreaElement>>(null);
   const Textarea = autosizable ? TextareaAutosize : NativeTextarea;
 
   const searchRegexp = useMemo(
