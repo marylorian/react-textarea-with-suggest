@@ -38,6 +38,7 @@ import {
   KeyCodes,
   SEARCH_MARKER,
   SUPPORTED_KEYDOWN,
+  AutoHighlightFirstItemValues,
 } from "../constants";
 
 interface TextareaSuggestProps<SuggestItemType>
@@ -56,6 +57,7 @@ interface TextareaSuggestProps<SuggestItemType>
   onSearch: (newValue: string) => void;
   customSuggestItemRenderer?: CustomSuggestItemRenderer<SuggestItemType>;
   forwardedRef?: RefObject<HTMLTextAreaElement>;
+  autoHighlightFirstItem?: AutoHighlightFirstItemValues;
 }
 
 export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
@@ -67,6 +69,7 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
   closeSuggestOnFocusOut = false,
   cancelSearchOnFocusOut = false,
   forwardedRef = undefined,
+  autoHighlightFirstItem = AutoHighlightFirstItemValues.Never,
   onSearch,
   onChange,
   customSuggestItemRenderer,
@@ -115,6 +118,17 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
       }
     }
   }, [text, value, prevText, prevValue]);
+
+  useEffect(() => {
+    if (
+      (suggestList?.length === 1 &&
+        autoHighlightFirstItem ===
+          AutoHighlightFirstItemValues.OnlySingleItem) ||
+      autoHighlightFirstItem === AutoHighlightFirstItemValues.Always
+    ) {
+      setSelectedItemIndex(0);
+    }
+  }, [suggestList, autoHighlightFirstItem]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLTextAreaElement>) => {

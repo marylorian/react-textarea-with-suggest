@@ -12,3 +12,9 @@ export const SUPPORTED_KEYDOWN = [
 ];
 export const SEARCH_MARKER = "@";
 export const ENDING_SYMBOLS = [" ", "\n", "\r"];
+
+export enum AutoHighlightFirstItemValues {
+  Always = "always",
+  OnlySingleItem = "only_single_item",
+  Never = "never",
+}
