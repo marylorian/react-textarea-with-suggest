@@ -291,10 +291,15 @@ export const TextareaWithSuggests = <SuggestItemType extends ReactNode>({
         return;
       }
 
-      let endPosition =
-        (textWithResult.includes(" ")
-          ? textWithResult.indexOf(" ")
-          : text.length) + position;
+      let endPosition;
+      if (textWithResult.includes(" ")) {
+        endPosition = textWithResult.indexOf(" ");
+      } else if (textWithResult.includes("\n")) {
+        endPosition = textWithResult.indexOf("\n");
+      } else {
+        endPosition = text.length;
+      }
+      endPosition += position;
 
       if (textWithResult.lastIndexOf(searchMarker) > 0) {
         endPosition = textWithResult.lastIndexOf(searchMarker) + position;
