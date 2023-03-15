@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-textarea-with-suggest": "latest"
+    "react-textarea-with-suggest": "2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
