@@ -10,6 +10,7 @@
 import React, { HTMLProps, ChangeEvent, RefObject } from "react";
 import { TextareaAutosizeProps } from "react-textarea-autosize";
 import { CustomSuggestItemRenderer } from "../types";
+import { AutoHighlightFirstItemValues } from "../constants";
 interface TextareaSuggestProps<SuggestItemType> extends Partial<Omit<TextareaAutosizeProps & HTMLProps<HTMLTextAreaElement>, "style">> {
     className?: string;
     autosizable?: boolean;
@@ -23,6 +24,7 @@ interface TextareaSuggestProps<SuggestItemType> extends Partial<Omit<TextareaAut
     onSearch: (newValue: string) => void;
     customSuggestItemRenderer?: CustomSuggestItemRenderer<SuggestItemType>;
     forwardedRef?: RefObject<HTMLTextAreaElement>;
+    autoHighlightFirstItem?: AutoHighlightFirstItemValues;
 }
-export declare const TextareaWithSuggests: <SuggestItemType extends React.ReactNode>({ autosizable, value, searchMarker, searchRegexp: searchRegexpProp, suggestList, closeSuggestOnFocusOut, cancelSearchOnFocusOut, forwardedRef, onSearch, onChange, customSuggestItemRenderer, ...props }: TextareaSuggestProps<SuggestItemType>) => JSX.Element;
+export declare const TextareaWithSuggests: <SuggestItemType extends React.ReactNode>({ autosizable, value, searchMarker, searchRegexp: searchRegexpProp, suggestList, closeSuggestOnFocusOut, cancelSearchOnFocusOut, forwardedRef, autoHighlightFirstItem, onSearch, onChange, customSuggestItemRenderer, ...props }: TextareaSuggestProps<SuggestItemType>) => JSX.Element;
 export {};
