@@ -2,3 +2,16 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm test
+npm run build
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+if [[ -z $(git status -s) ]]
+then
+  echo "${GREEN}SUCCESS:${NC} working tree is clean"
+else
+  echo "${RED}ERROR:${NC} uncommited changes have been detected, please commit changes to avoid storing outdated build"
+  exit 1
+fi

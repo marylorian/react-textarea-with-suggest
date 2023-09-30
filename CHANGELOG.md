@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.5.0 (2023-09-30)
+
+**Implemented enhancements:**
+[By @pazoozoo42 Pull Request](https://github.com/marylorian/react-textarea-with-suggest/pull/9):
+- added option `autoHighlightFirstItem` to automatically hightlight first item in the suggestions list
+- added enum `AutoHighlightFirstItemValues` with allowed `autoHighlightFirstItem` values to `constants.ts`
+
 ## v2.4.0 (2023-02-20)
 
 **Implemented enhancements:**
