@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
-    "react-textarea-autosize": "^8.4.0"
+    "react-textarea-autosize": "^8.5.3"
   },
   "files": [
     "lib",
