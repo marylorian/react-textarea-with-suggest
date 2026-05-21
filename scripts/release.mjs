@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 const args = new Set(process.argv.slice(2));
 const valueArg = (name) => {
@@ -238,18 +240,38 @@ const publishPackage = (packageInfo) => {
   run("npm", publishArgs);
 };
 
-const deployExampleApp = (packageInfo) => {
-  run("npm", [
-    "pkg",
-    "set",
-    `dependencies.${packageInfo.name}=${packageInfo.version}`,
-    "--prefix",
-    "example",
-  ]);
-  run("npm", ["install", "--package-lock-only", "--ignore-scripts"], {
-    cwd: "example",
+const packPackage = () => {
+  const packDir = mkdtempSync(join(tmpdir(), "react-textarea-with-suggest-"));
+  const output = run("npm", ["pack", "--pack-destination", packDir], {
+    capture: true,
   });
+  const fileName = output.split("\n").filter(Boolean).at(-1);
+
+  if (!fileName) {
+    throw new Error("npm pack did not produce a tarball name.");
+  }
+
+  return join(packDir, fileName);
+};
+
+const deployExampleApp = (packageInfo) => {
+  const tarball = packPackage();
+  console.log(
+    `Deploying example with ${packageInfo.name}@${packageInfo.version} from ${tarball}`
+  );
+
   run("npm", ["ci", "--ignore-scripts"], { cwd: "example" });
+  run(
+    "npm",
+    [
+      "install",
+      "--no-save",
+      "--package-lock=false",
+      "--ignore-scripts",
+      tarball,
+    ],
+    { cwd: "example" }
+  );
   run("npm", ["run", "build"], { cwd: "example" });
   run(
     "npm",
