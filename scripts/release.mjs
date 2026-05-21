@@ -14,6 +14,7 @@ const valueArg = (name) => {
 const dryRun = args.has("--dry-run");
 const publish = args.has("--publish");
 const push = args.has("--push");
+const deployExample = args.has("--deploy-example");
 const yes = args.has("--yes");
 const provenance = args.has("--provenance");
 const allowAnyCommits = args.has("--allow-any-commits");
@@ -29,6 +30,7 @@ const run = (command, commandArgs = [], options = {}) => {
     encoding: "utf8",
     stdio: options.capture ? ["ignore", "pipe", "pipe"] : "inherit",
     shell: false,
+    cwd: options.cwd,
   });
 
   if (result.status !== 0) {
@@ -193,13 +195,19 @@ const updateChangelog = (version, commits) => {
   );
 };
 
-const assertTagAtHead = (tagName) => {
-  const tags = run("git", ["tag", "--points-at", "HEAD"], { capture: true })
-    .split("\n")
-    .filter(Boolean);
+const assertTagExists = (tagName) => {
+  const result = spawnSync(
+    "git",
+    ["rev-parse", "--verify", `refs/tags/${tagName}`],
+    {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+      shell: false,
+    }
+  );
 
-  if (!tags.includes(tagName)) {
-    throw new Error(`Expected ${tagName} to point at HEAD before publishing.`);
+  if (result.status !== 0) {
+    throw new Error(`Expected ${tagName} to exist before publishing.`);
   }
 };
 
@@ -230,14 +238,45 @@ const publishPackage = (packageInfo) => {
   run("npm", publishArgs);
 };
 
-const main = () => {
-  if (gitSubject().startsWith("chore(release):")) {
-    const packageInfo = pkg();
-    const releaseTag = `v${packageInfo.version}`;
+const deployExampleApp = (packageInfo) => {
+  run("npm", [
+    "pkg",
+    "set",
+    `dependencies.${packageInfo.name}=${packageInfo.version}`,
+    "--prefix",
+    "example",
+  ]);
+  run("npm", ["install", "--package-lock-only", "--ignore-scripts"], {
+    cwd: "example",
+  });
+  run("npm", ["ci", "--ignore-scripts"], { cwd: "example" });
+  run("npm", ["run", "build"], { cwd: "example" });
+  run(
+    "npm",
+    [
+      "run",
+      "deploy",
+      "--",
+      "-u",
+      "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+    ],
+    {
+      cwd: "example",
+    }
+  );
+};
 
+const main = () => {
+  const packageInfo = pkg();
+  const releaseTag = `v${packageInfo.version}`;
+
+  if (gitSubject().startsWith("chore(release):")) {
     if (publish) {
-      assertTagAtHead(releaseTag);
+      assertTagExists(releaseTag);
       publishPackage(packageInfo);
+      if (deployExample) {
+        deployExampleApp(packageInfo);
+      }
     } else {
       console.log("Latest commit is already a release commit; nothing to do.");
     }
@@ -245,11 +284,19 @@ const main = () => {
     return;
   }
 
+  if (publish && latestTag() === releaseTag) {
+    assertTagExists(releaseTag);
+    publishPackage(packageInfo);
+    if (deployExample) {
+      deployExampleApp(packageInfo);
+    }
+    return;
+  }
+
   if (!dryRun) {
     assertCleanWorktree();
   }
 
-  const packageInfo = pkg();
   const tag = latestTag();
   const commits = getCommits(tag);
   const releaseType = determineReleaseType(commits);
@@ -289,6 +336,10 @@ const main = () => {
 
   if (publish) {
     publishPackage({ ...packageInfo, version: nextVersion });
+  }
+
+  if (deployExample) {
+    deployExampleApp({ ...packageInfo, version: nextVersion });
   }
 
   if (push) {
