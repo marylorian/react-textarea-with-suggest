@@ -179,6 +179,13 @@ const updateChangelog = (version, commits) => {
     throw new Error("CHANGELOG.md must start with '# Changelog'");
   }
 
+  if (current.includes(`## v${version} `)) {
+    console.log(
+      `CHANGELOG.md already contains v${version}; keeping existing entry.`
+    );
+    return;
+  }
+
   writeFileSync(
     path,
     current.replace("# Changelog\n\n", `# Changelog\n\n${entry}`)

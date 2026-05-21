@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.6.0 (2026-05-21)
+
+**Build and release:**
+- upgraded the build pipeline from Rollup 2 to Rollup 4
+- moved the Rollup config to `rollup.config.mjs`
+- updated Rollup plugins, including `@rollup/plugin-babel`, `@rollup/plugin-typescript`, and `@rollup/plugin-terser`
+- added explicit `tslib` support required by the TypeScript Rollup plugin
+- fixed CI build failures related to missing `crypto`/terser serialization behavior and missing `tslib`
+- added Node engine metadata and expanded CI coverage to Node 18, 22, and 24
+- updated GitHub Actions to current `checkout` and `setup-node` actions with npm caching
+- added automated release tooling for changelog updates, version bumps, release tags, and npm publishing
+
+**Dependency maintenance:**
+- updated `react-textarea-autosize` from 8.4.0 to 8.5.3
+- updated build artifacts after dependency and build-tool changes
+- applied Dependabot/Snyk maintenance updates across root and example dependencies, including Babel, webpack, js-yaml, braces, minimatch, lodash, form-data, postcss, serialize-javascript, and related transitive packages
+
 ## v2.5.0 (2023-09-30)
 
 **Implemented enhancements:**
