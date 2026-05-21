@@ -1,16 +1,24 @@
 import pkg from "./package.json";
-import { webcrypto } from "crypto";
-import { createRequire } from "module";
 import babel from "@rollup/plugin-babel";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
+import { minify } from "terser";
 
-if (typeof globalThis.crypto === "undefined") {
-  globalThis.crypto = webcrypto;
-}
+const terser = () => ({
+  name: "terser",
+  async renderChunk(code, _chunk, outputOptions) {
+    const result = await minify(code, {
+      module: outputOptions.format === "es",
+      sourceMap: Boolean(outputOptions.sourcemap),
+      toplevel: outputOptions.format === "cjs",
+    });
 
-const require = createRequire(import.meta.url);
-const terser = require("@rollup/plugin-terser");
+    return {
+      code: result.code || code,
+      map: result.map || null,
+    };
+  },
+});
 
 export default [
   {
