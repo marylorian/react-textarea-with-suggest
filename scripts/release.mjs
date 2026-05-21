@@ -49,6 +49,7 @@ const gitStatus = () =>
   run("git", ["status", "--porcelain"], { capture: true });
 const gitSubject = () =>
   run("git", ["log", "-1", "--pretty=%s"], { capture: true });
+const pkg = () => JSON.parse(readFileSync("package.json", "utf8"));
 
 const assertCleanWorktree = () => {
   const status = gitStatus();
@@ -192,9 +193,55 @@ const updateChangelog = (version, commits) => {
   );
 };
 
+const assertTagAtHead = (tagName) => {
+  const tags = run("git", ["tag", "--points-at", "HEAD"], { capture: true })
+    .split("\n")
+    .filter(Boolean);
+
+  if (!tags.includes(tagName)) {
+    throw new Error(`Expected ${tagName} to point at HEAD before publishing.`);
+  }
+};
+
+const packageVersionExists = ({ name, version }) => {
+  const result = spawnSync("npm", ["view", `${name}@${version}`, "version"], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    shell: false,
+  });
+
+  return result.status === 0 && result.stdout.trim() === version;
+};
+
+const publishPackage = (packageInfo) => {
+  if (!process.env.NODE_AUTH_TOKEN && !process.env.NPM_TOKEN) {
+    throw new Error("Publishing requires NODE_AUTH_TOKEN or NPM_TOKEN.");
+  }
+
+  if (packageVersionExists(packageInfo)) {
+    console.log(
+      `${packageInfo.name}@${packageInfo.version} is already published.`
+    );
+    return;
+  }
+
+  const publishArgs = ["publish", "--access", "public"];
+  if (provenance) publishArgs.push("--provenance");
+  run("npm", publishArgs);
+};
+
 const main = () => {
   if (gitSubject().startsWith("chore(release):")) {
-    console.log("Latest commit is already a release commit; nothing to do.");
+    const packageInfo = pkg();
+    const releaseTag = `v${packageInfo.version}`;
+
+    if (publish) {
+      assertTagAtHead(releaseTag);
+      publishPackage(packageInfo);
+    } else {
+      console.log("Latest commit is already a release commit; nothing to do.");
+    }
+
     return;
   }
 
@@ -202,7 +249,7 @@ const main = () => {
     assertCleanWorktree();
   }
 
-  const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+  const packageInfo = pkg();
   const tag = latestTag();
   const commits = getCommits(tag);
   const releaseType = determineReleaseType(commits);
@@ -212,7 +259,7 @@ const main = () => {
     return;
   }
 
-  const nextVersion = bumpVersion(pkg.version, releaseType);
+  const nextVersion = bumpVersion(packageInfo.version, releaseType);
   console.log(`Preparing ${releaseType} release: v${nextVersion}`);
 
   if (dryRun) {
@@ -241,12 +288,7 @@ const main = () => {
   run("git", ["tag", "-a", `v${nextVersion}`, "-m", `v${nextVersion}`]);
 
   if (publish) {
-    if (!process.env.NODE_AUTH_TOKEN && !process.env.NPM_TOKEN) {
-      throw new Error("Publishing requires NODE_AUTH_TOKEN or NPM_TOKEN.");
-    }
-    const publishArgs = ["publish", "--access", "public"];
-    if (provenance) publishArgs.push("--provenance");
-    run("npm", publishArgs);
+    publishPackage({ ...packageInfo, version: nextVersion });
   }
 
   if (push) {
