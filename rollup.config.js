@@ -1,8 +1,16 @@
 import pkg from "./package.json";
+import { webcrypto } from "crypto";
+import { createRequire } from "module";
 import babel from "@rollup/plugin-babel";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
-import terser from "@rollup/plugin-terser";
+
+if (typeof globalThis.crypto === "undefined") {
+  globalThis.crypto = webcrypto;
+}
+
+const require = createRequire(import.meta.url);
+const terser = require("@rollup/plugin-terser");
 
 export default [
   {
