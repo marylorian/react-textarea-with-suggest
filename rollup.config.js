@@ -2,7 +2,23 @@ import pkg from "./package.json";
 import babel from "@rollup/plugin-babel";
 import typescript from "@rollup/plugin-typescript";
 import css from "rollup-plugin-css-only";
-import terser from "@rollup/plugin-terser";
+import { minify } from "terser";
+
+const terser = () => ({
+  name: "terser",
+  async renderChunk(code, _chunk, outputOptions) {
+    const result = await minify(code, {
+      module: outputOptions.format === "es",
+      sourceMap: Boolean(outputOptions.sourcemap),
+      toplevel: outputOptions.format === "cjs",
+    });
+
+    return {
+      code: result.code || code,
+      map: result.map || null,
+    };
+  },
+});
 
 export default [
   {
