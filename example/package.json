@@ -5,20 +5,16 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-textarea-with-suggest": "2.5.0"
+    "react-textarea-with-suggest": "file:.."
   },
   "scripts": {
-    "start": "react-scripts start",
-    "test": "react-scripts test",
-    "build": "react-scripts build",
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "test": "echo \"No example tests configured\"",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "deploy": "gh-pages -d dist"
   },
   "browserslist": {
     "production": [
@@ -34,6 +30,6 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0",
-    "react-scripts": "^5.0.1"
+    "vite": "^6.4.2"
   }
 }

@@ -3,6 +3,7 @@
   "version": "2.6.0",
   "description": "Textarea with suggest for React app",
   "main": "lib/index.js",
+  "module": "lib/index.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "react-textarea-autosize": "^8.5.3"
