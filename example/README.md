@@ -1,6 +1,6 @@
-# Example application with react-textarea-with-suggest
+# react-textarea-with-suggest example
 
-This small application was created to present use cases of react-textarea-with-suggest package
+This small Vite app demonstrates common `react-textarea-with-suggest` use cases.
 
 ## Available Scripts
 
@@ -9,12 +9,18 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The page reloads when you make changes.
+
+### `npm run build`
+
+Builds the app for production into the `dist` directory.
+
+### `npm run preview`
+
+Serves the production build locally.
 
 ## Learn More
 
-To learn more, check out the [Readme](https://github.com/marylorian/react-textarea-with-suggest).
-
+To learn more, check out the [project README](https://github.com/marylorian/react-textarea-with-suggest).
