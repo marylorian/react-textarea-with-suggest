@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-textarea-with-suggest": "2.6.0"
+    "react-textarea-with-suggest": "file:.."
   },
   "scripts": {
     "start": "vite --host 0.0.0.0",

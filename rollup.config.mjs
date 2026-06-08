@@ -28,6 +28,11 @@ export default {
       sourcemap: true,
       strict: false,
     },
+    {
+      file: pkg.module,
+      format: "esm",
+      sourcemap: true,
+    },
   ],
   plugins: [
     typescript({
